@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A2A + MCP: AI की दो रीढ़ — एक समग्र गाइड</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .nav {
+            background: #f8f9fa;
+            padding: 20px;
+            border-bottom: 3px solid #e9ecef;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding: 30px;
+            border-radius: 15px;
+            background: #f8f9fa;
+            border-left: 5px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateX(5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .section h2 {
+            color: #2c3e50;
+            font-size: 2em;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section h3 {
+            color: #34495e;
+            font-size: 1.5em;
+            margin: 25px 0 15px 0;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 5px;
+            display: inline-block;
+        }
+
+        .emoji {
+            font-size: 1.2em;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .table th, .table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .table th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            font-weight: 600;
+        }
+
+        .table tr:hover {
+            background: #f1f3f5;
+        }
+
+        .example-box {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border-left: 5px solid #2196f3;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .example-box::before {
+            content: '💡';
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 2em;
+            opacity: 0.3;
+        }
+
+        .workflow {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 20px 0;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            flex-wrap: wrap;
+        }
+
+        .workflow-step {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            min-width: 150px;
+            text-align: center;
+        }
+
+        .arrow {
+            font-size: 1.5em;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .collapsible {
+            cursor: pointer;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            width: 100%;
+            text-align: left;
+            font-size: 1.1em;
+            font-weight: 600;
+            margin: 10px 0;
+            transition: all 0.3s ease;
+        }
+
+        .collapsible:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: #f8f9fa;
+            border-radius: 0 0 10px 10px;
+        }
+
+        .collapsible-content.active {
+            max-height: 1000px;
+            padding: 20px;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #ff9800;
+            margin: 20px 0;
+        }
+
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, #4caf50, #45a049);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 600;
+            margin: 20px 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                border-radius: 0;
+            }
+            .nav, .download-btn, .collapsible {
+                display: none;
+            }
+            .section {
+                break-inside: avoid;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .workflow {
+                flex-direction: column;
+            }
+            .arrow {
+                transform: rotate(90deg);
+            }
+            .nav-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            .header h1 {
+                font-size: 2em;
+            }
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌐 A2A + MCP: AI की दो रीढ़</h1>
+            <p>एक समग्र गाइड</p>
+            <p style="font-size: 1em; margin-top: 15px; opacity: 0.8;">📝 By: Ankit Patel</p>
+        </div>
+
+        <div class="nav">
+            <div class="nav-buttons">
+                <button class="nav-btn" onclick="scrollToSection('intro')">🚀 परिचय</button>
+                <button class="nav-btn" onclick="scrollToSection('a2a')">🤝 A2A</button>
+                <button class="nav-btn" onclick="scrollToSection('mcp')">🔌 MCP</button>
+                <button class="nav-btn" onclick="scrollToSection('comparison')">🧠 तुलना</button>
+                <button class="nav-btn" onclick="scrollToSection('example')">🧩 उदाहरण</button>
+                <button class="download-btn" onclick="downloadPDF()">📥 PDF डाउनलोड करें</button>
+            </div>
+        </div>
+
+        <div class="content">
+            <div id="intro" class="section">
+                <h2><span class="emoji">🚀</span> परिचय</h2>
+                
+                <div class="highlight">
+                    <h3><span class="emoji">🤖</span> AI आज कैसा है?</h3>
+                    <p>आज का AI सिर्फ जवाब देने तक सीमित नहीं है। वह अब:</p>
+                    <ul style="margin: 15px 0; padding-left: 30px;">
+                        <li>🔄 एजेंट्स के रूप में काम करता है</li>
+                        <li>📚 बाहरी जानकारी से जुड़ता है</li>
+                        <li>🎯 कई टास्क मिलकर करता है</li>
+                    </ul>
+                </div>
+
+                <p style="font-size: 1.1em; margin: 20px 0;">इसलिए ज़रूरत है दो चीजों की:</p>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>मानक</th>
+                            <th>काम</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>🧠 A2A</td>
+                            <td>एजेंट्स को आपस में बात करने देना</td>
+                        </tr>
+                        <tr>
+                            <td>🔌 MCP</td>
+                            <td>एजेंट्स/मॉडल्स को बाहरी डेटा से जोड़ना</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="a2a" class="section">
+                <h2><span class="emoji">🤝</span> भाग 1: A2A (Agent to Agent Communication)</h2>
+                
+                <p style="font-size: 1.1em; margin-bottom: 25px;">A2A एक ऐसा प्रोटोकॉल है जो AI एजेंट्स को एक-दूसरे से संवाद, कार्य विभाजन, और सहयोग करने की सुविधा देता है।</p>
+
+                <button class="collapsible">🛠️ क्यों ज़रूरी है?</button>
+                <div class="collapsible-content">
+                    <p>कल्पना कीजिए:</p>
+                    <ul style="margin: 15px 0; padding-left: 30px;">
+                        <li>एक एजेंट ईमेल लिख सकता है</li>
+                        <li>दूसरा मीटिंग शेड्यूल करता है</li>
+                        <li>तीसरा रिपोर्ट जनरेट करता है</li>
+                    </ul>
+                    <p><strong>इनके बीच तालमेल के लिए A2A ज़रूरी है।</strong></p>
+                </div>
+
+                <h3><span class="emoji">🔍</span> A2A में क्या होता है?</h3>
+                
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>घटक</th>
+                            <th>उदाहरण</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>🆔 Agent Identity</td>
+                            <td>calendar_bot_01, pdf_reader_v2</td>
+                        </tr>
+                        <tr>
+                            <td>🎓 Skills</td>
+                            <td>"Can read PDFs", "Can book meetings"</td>
+                        </tr>
+                        <tr>
+                            <td>📡 Communication</td>
+                            <td>API कॉल, Event भेजना</td>
+                        </tr>
+                        <tr>
+                            <td>🔐 Permissions</td>
+                            <td>"Only HR data accessible"</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="example-box">
+                    <h3><span class="emoji">🧩</span> एक उदाहरण:</h3>
+                    <p><strong>टास्क:</strong> "क्लाइंट मीटिंग की रिपोर्ट बनाओ और भेजो।"</p>
+                    
+                    <div class="workflow">
+                        <div class="workflow-step">TaskAgent</div>
+                        <div class="arrow">➡️</div>
+                        <div class="workflow-step">ReportAgent</div>
+                        <div class="arrow">➡️</div>
+                        <div class="workflow-step">EmailAgent</div>
+                    </div>
+                    
+                    <ol style="margin: 15px 0; padding-left: 30px;">
+                        <li>TaskAgent ➡️ ReportAgent: रिपोर्ट जनरेट करने को कहा</li>
+                        <li>ReportAgent ➡️ EmailAgent: रिपोर्ट भेजने को कहा</li>
+                        <li>EmailAgent: क्लाइंट को ईमेल भेजता है</li>
+                    </ol>
+                    <p><strong>➡️ ये सब A2A प्रोटोकॉल से समन्वयित होता है।</strong></p>
+                </div>
+            </div>
+
+            <div id="mcp" class="section">
+                <h2><span class="emoji">🔌</span> भाग 2: MCP (Model Context Protocol)</h2>
+                
+                <p style="font-size: 1.1em; margin-bottom: 25px;">MCP मॉडल्स को बाहरी दुनिया से जोड़ता है — जैसे APIs, Database, Documents।</p>
+
+                <button class="collapsible">🛠️ क्यों ज़रूरी है?</button>
+                <div class="collapsible-content">
+                    <p>LLMs बहुत कुछ "बता" सकते हैं, लेकिन वो खुद:</p>
+                    <ul style="margin: 15px 0; padding-left: 30px;">
+                        <li>📨 ईमेल नहीं भेज सकते</li>
+                        <li>🧪 क्वेरी नहीं चला सकते</li>
+                        <li>📂 एक्सेल फाइल नहीं खोल सकते</li>
+                    </ul>
+                    <p><strong>MCP इन्हें context (बाहरी जानकारी) देने का तरीका है।</strong></p>
+                </div>
+
+                <h3><span class="emoji">📦</span> MCP में क्या होता है?</h3>
+                
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>घटक</th>
+                            <th>विवरण</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>🤖 Model</td>
+                            <td>GPT, Claude, LLaMA</td>
+                        </tr>
+                        <tr>
+                            <td>🌐 Context</td>
+                            <td>API, Database, Web Data</td>
+                        </tr>
+                        <tr>
+                            <td>📏 Standard</td>
+                            <td>Access, Format, Validation नियम</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="highlight">
+                    <h3><span class="emoji">🔌</span> USB-C जैसा क्यों?</h3>
+                    <p>MCP ठीक वैसे ही है जैसे USB-C पोर्ट — एक मानक जिसके ज़रिए आप किसी भी डिवाइस को आसानी से कनेक्ट करते हैं।</p>
+                    
+                    <div style="margin: 20px 0; padding: 15px; background: rgba(255,255,255,0.5); border-radius: 10px;">
+                        <p><strong>📍 AI Analogy:</strong></p>
+                        <p>USB-C → Standard Port</p>
+                        <p>MCP → Standard for AI to access context</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2><span class="emoji">🧑‍🏫</span> क्लासरूम संवाद — दोनों को एक साथ समझें</h2>
+                
+                <div class="example-box">
+                    <p><strong>👨‍🏫 टीचर:</strong> आज हम सीखेंगे कि AI एजेंट्स आपस में और दुनिया से कैसे बात करते हैं।</p>
+                    <p><strong>👩‍🎓 स्टूडेंट:</strong> मतलब A2A और MCP?</p>
+                    <p><strong>👨‍🏫</strong> सही पकड़ा!</p>
+                    <ul style="margin: 15px 0; padding-left: 30px;">
+                        <li>A2A = Agent ↔ Agent</li>
+                        <li>MCP = Agent ↔ Outside World</li>
+                    </ul>
+                    <p><strong>👩‍🎓 स्टूडेंट:</strong> एक एजेंट दूसरे को टास्क देगा, और MCP से उसे डेटा मिलेगा?</p>
+                    <p><strong>👨‍🏫 टीचर:</strong> बिल्कुल! 🎯</p>
+                </div>
+            </div>
+
+            <div id="comparison" class="section">
+                <h2><span class="emoji">🧠</span> तुलना तालिका: A2A vs MCP</h2>
+                
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>विषय</th>
+                            <th>A2A</th>
+                            <th>MCP</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>भूमिका</strong></td>
+                            <td>एजेंट्स के बीच बातचीत</td>
+                            <td>एजेंट/मॉडल को डेटा से जोड़ना</td>
+                        </tr>
+                        <tr>
+                            <td><strong>फोकस</strong></td>
+                            <td>Task Coordination</td>
+                            <td>Context Access</td>
+                        </tr>
+                        <tr>
+                            <td><strong>संचार</strong></td>
+                            <td>Task, Events, Messages</td>
+                            <td>APIs, Files, DB Access</td>
+                        </tr>
+                        <tr>
+                            <td><strong>उदाहरण</strong></td>
+                            <td>"तुम ये रिपोर्ट बनाओ"</td>
+                            <td>"इस डॉक्युमेंट से डेटा निकालो"</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="example" class="section">
+                <h2><span class="emoji">🧩</span> संयुक्त उदाहरण: दोनों मिलकर कैसे काम करते हैं?</h2>
+                
+                <div class="example-box">
+                    <h3><span class="emoji">🎯</span> टास्क: "ग्राहक की पिछली खरीदों की रिपोर्ट बनाओ और मैनेजर को भेजो।"</h3>
+                    
+                    <div class="workflow">
+                        <div class="workflow-step">PlannerAgent</div>
+                        <div class="arrow">➡️</div>
+                        <div class="workflow-step">DataFetcherAgent</div>
+                        <div class="arrow">➡️</div>
+                        <div class="workflow-step">ReportAgent</div>
+                        <div class="arrow">➡️</div>
+                        <div class="workflow-step">EmailAgent</div>
+                    </div>
+                    
+                    <ol style="margin: 20px 0; padding-left: 30px; font-size: 1.1em;">
+                        <li>🧠 PlannerAgent ➡️ DataFetcherAgent <span style="color: #667eea;">(A2A)</span></li>
+                        <li>📂 DataFetcherAgent ➡️ CRM Database <span style="color: #ff9800;">(MCP)</span></li>
+                        <li>📊 DataFetcherAgent ➡️ ReportAgent <span style="color: #667eea;">(A2A)</span></li>
+                        <li>📨 ReportAgent ➡️ EmailAgent <span style="color: #667eea;">(A2A)</span></li>
+                        <li>📧 Email sent!</li>
+                    </ol>
+                    
+                    <div style="background: rgba(255,255,255,0.7); padding: 15px; border-radius: 10px; margin-top: 20px;">
+                        <p>✔️ <strong>A2A</strong> = एजेंट्स को जोड़ता है</p>
+                        <p>✔️ <strong>MCP</strong> = उन्हें बाहरी डेटा देता है</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2><span class="emoji">📚</span> सारांश (Summary)</h2>
+                
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>टॉपिक</th>
+                            <th>A2A</th>
+                            <th>MCP</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>क्या है</strong></td>
+                            <td>Agent-to-Agent Protocol</td>
+                            <td>Model Context Protocol</td>
+                        </tr>
+                        <tr>
+                            <td><strong>क्यों</strong></td>
+                            <td>एजेंट्स में समन्वय</td>
+                            <td>मॉडल्स को डेटा देने के लिए</td>
+                        </tr>
+                        <tr>
+                            <td><strong>कहाँ उपयोग होता है</strong></td>
+                            <td>मल्टी-एजेंट सिस्टम, एंटरप्राइज़ टूल्स</td>
+                            <td>LLMs + External APIs, Databases</td>
+                        </tr>
+                        <tr>
+                            <td><strong>किसने बनाया</strong></td>
+                            <td>Google (Gemini), Microsoft</td>
+                            <td>Anthropic (Claude), OpenAI सहयोग</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="section">
+                <h2><span class="emoji">📈</span> आगे क्या?</h2>
+                
+                <p style="font-size: 1.1em; margin-bottom: 20px;">अगर आप:</p>
+                <ul style="margin: 15px 0; padding-left: 30px; font-size: 1.1em;">
+                    <li>एक AI डेवलपर हैं</li>
+                    <li>एजेंटिक एप्लिकेशन बना रहे हैं</li>
+                    <li>या LLMs को प्रैक्टिकल बनाना चाहते हैं</li>
+                </ul>
+                <p style="font-size: 1.1em;"><strong>तो A2A और MCP को समझना और इस्तेमाल करना आपके लिए बेहद ज़रूरी है।</strong></p>
+            </div>
+
+            <div class="section">
+                <h2><span class="emoji">🎁</span> बोनस: आप इसे कैसे इस्तेमाल कर सकते हैं?</h2>
+                
+                <div class="highlight">
+                    <ul style="padding-left: 30px; font-size: 1.1em;">
+                        <li><strong>🔹 Product Designers:</strong> Multi-agent flows बनाते समय</li>
+                        <li><strong>🔹 Developers:</strong> Agent API और मॉड्यूल डिवाइड करते समय</li>
+                        <li><strong>🔹 Researchers:</strong> Multi-agent architecture और evaluation करते समय</li>
+                        <li><strong>🔹 Students:</strong> समझें कि आने वाला AI कैसा होगा</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>© 2025 | A2A + MCP Guide | AI की दो रीढ़</p>
+            <p style="margin: 10px 0; font-size: 0.9em; opacity: 0.8;">Author: Ankit Patel</p>
+            <button class="download-btn" onclick="downloadPDF()">📥 PDF के रूप में सेव करें</button>
+            <button class="download-btn" onclick="printDocument()">🖨️ प्रिंट करें</button>
+        </div>
+    </div>
+
+    <script>
+        // Navigation
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+
+        // Collapsible sections
+        document.querySelectorAll('.collapsible').forEach(button => {
+            button.addEventListener('click', function() {
+                this.classList.toggle('active');
+                const content = this.nextElementSibling;
+                content.classList.toggle('active');
+            });
+        });
+
+        // Download/Save functions
+        function downloadPDF() {
+            window.print();
+        }
+
+        function printDocument() {
+            window.print();
+        }
+
+        // Smooth animations on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        document.querySelectorAll('.section').forEach((section) => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(section);
+        });
+
+        // Add some interactivity to tables
+        document.querySelectorAll('.table tr').forEach(row => {
+            row.addEventListener('mouseenter', function() {
+                this.style.backgroundColor = '#e3f2fd';
+            });
+            row.addEventListener('mouseleave', function() {
+                this.style.backgroundColor = '';
+            });
+        });
+    </script>
+</body>
+</html>
